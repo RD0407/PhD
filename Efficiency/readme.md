@@ -75,4 +75,4 @@ For each `option` run the macro creates a **particle/charge-specific folder** an
     - `"<cmin>_<cmax>_eff_mlconstr"`
 
 At the end you’ll also see a console summary like:
-
+✅ Done. Plots in smooth_out_<DET> and graphs in <DET>_smoothCompare.root
