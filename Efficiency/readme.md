@@ -102,3 +102,6 @@ root -l -b -q 'Efficiency_FitML.c(<option>, "<in.root>", "<prefix>")'
 # Examples
 root -l -b -q 'Efficiency_FitML.c(1, "TPC_efficiencies.root", "TPC_eff_")'   # π+
 root -l -b -q 'Efficiency_FitML.c(4, "TOF_efficiencies.root", "TOF_eff_")'   # K−
+
+The macro loops over centrality bins:
+0–5, 5–10, 10–20, 20–30, 30–40, 40–50, 50–60, 60–70, 70–80, 80–100.
