@@ -105,3 +105,59 @@ root -l -b -q 'Efficiency_FitML.c(4, "TOF_efficiencies.root", "TOF_eff_")'   # K
 ```
 The macro loops over centrality bins:
 0–5, 5–10, 10–20, 20–30, 30–40, 40–50, 50–60, 60–70, 70–80, 80–100.
+
+
+Tunable knobs (edit inside the macro)
+static const double kPTcut   = 1.0;  // Tail starts here (modeling/metrics)
+static const double kXminAll = 0.0;  // Common x-range for the canvas
+static const double kXmaxAll = 5.0;
+static const double kStep    = 0.02; // Step for drawing smooth curves
+
+    kPTcut controls where the tail begins. Ratios and metrics are computed only for x ≥ kPTcut. Hybrid histograms use data below, model above.
+
+    The BDTG is configured with sensible defaults (NTrees=400, Shrinkage=0.08, MaxDepth=2, etc.) and can be tweaked inside the SmoothML helper.
+
+Methods in a nutshell
+
+    Fit1 (Erf-plateau)
+    f(x) = p0 + p1 * 0.5*(1 + erf((x - p2)/p3)) with bounded parameters and weighted fit.
+
+    Fit2 (Logistic+tilt)
+    f(x) = p0 + p1 / (1 + exp(-(x - p2)/p3)) + p4 * x (weighted; small tilt allowed).
+
+    ML (BDTG + smoothing)
+    Train BDTG on tail (x=pt, y=eff); predict on a dense grid; then:
+
+        Moving average (window 2–3)
+
+        Isotonic regression (enforce non-decreasing)
+
+        Clamp to [0,1]
+
+    S (Constrained smoother)
+    Applies the same three post-steps directly to the tail points.
+
+Metrics: on tail points only:
+
+    Weighted RMSE (rmse_w) using inverse-variance weights from asymmetric y-errors condensed to a single σ.
+
+    χ² (with heuristic NDF = max(1, N−4)) reported as “reduced χ²” in the stats box.
+
+Troubleshooting
+
+    “ML skipped: weights not found …”
+    TMVA training writes weights under dl/weights/F_BDTG.weights.xml in a temporary output dir. If the file is missing or TMVA isn’t enabled, the macro will skip ML and continue.
+
+    “Too few tail points”
+    If there are < 4–5 tail points after kPTcut, parametric fits or ML may be skipped; you will still get the original graph and (usually) the constrained smoother.
+
+    Names don’t match
+    Verify your object names match "<prefix><cmin>_<cmax>" or adjust GetEffByCent in the macro.
+
+Development notes
+
+    Output paths are automatically namespaced by particle/charge and detector inferred from prefix.
+
+    Styling (SetupNiceStyle, pad layout, legends, latex labels) is handled inside the macro for publication-quality PNGs.
+
+    The macro writes/updates the ROOT output in UPDATE mode to avoid losing previous results
