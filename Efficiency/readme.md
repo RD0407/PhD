@@ -76,3 +76,29 @@ For each `option` run the macro creates a **particle/charge-specific folder** an
 
 At the end you’ll also see a console summary like:
 ✅ Done. Plots in smooth_out_<DET> and graphs in <DET>_smoothCompare.root
+
+
+---
+
+## Requirements
+
+- **ROOT 6** (tested with TMVA enabled). Headers used include:
+  - `TFile`, `TEfficiency`, `TGraph(Asymm)Errors`, `TF1`, `TH1D`, `TCanvas`, `TLatex`, `TLegend`, `TStyle`, `TPad`, etc.
+  - **TMVA** (optional but recommended) for BDTG:
+    - `TMVA/Tools.h`, `TMVA/Factory.h`, `TMVA/DataLoader.h`, `TMVA/Reader.h`
+  - If TMVA is **not** available or an exception occurs, **ML** is skipped and the macro still produces **S** (constrained smoother) and the two parametric fits.
+- A UNIX-like shell for creating output directories (the macro uses `gSystem->Exec("mkdir -p …")`).
+
+---
+
+## Usage
+
+Run in batch mode from your project directory:
+
+```bash
+# General form
+root -l -b -q 'Efficiency_FitML.c(<option>, "<in.root>", "<prefix>")'
+
+# Examples
+root -l -b -q 'Efficiency_FitML.c(1, "TPC_efficiencies.root", "TPC_eff_")'   # π+
+root -l -b -q 'Efficiency_FitML.c(4, "TOF_efficiencies.root", "TOF_eff_")'   # K−
