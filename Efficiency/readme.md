@@ -1,4 +1,4 @@
-# Efficiency_FitML — Smooth & Compare Efficiency Curves (ROOT/TMVA)
+# Efficiency_FitML : Smooth & Compare Efficiency Curves (ROOT/TMVA)
 
 This repository contains a single ROOT macro, **`Efficiency_FitML.c`**, that reads detector efficiency curves (as `TEfficiency` objects) and compares four tail–smoothing/fit strategies:
 
