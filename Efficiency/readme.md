@@ -64,3 +64,15 @@ For each centrality bin (defaults: `0–5, 5–10, …, 80–100`), the macro:
 
 For each `option` run the macro creates a **particle/charge-specific folder** and puts detector-tagged results inside it.
 
+
+- **PNG plots**: one per centrality bin (`<cmin>_<cmax>_compare.png`), e.g. `0_5_compare.png`.
+- **ROOT file**: `<DET>_smoothCompare.root` contains:
+  - Original graphs: `"<cmin>_<cmax>_orig"`
+  - Hybrid histograms using data (< `kPTcut`) + model (≥ `kPTcut`):
+    - `"<cmin>_<cmax>_eff_fit1"`
+    - `"<cmin>_<cmax>_eff_fit2"`
+    - `"<cmin>_<cmax>_eff_ml"`
+    - `"<cmin>_<cmax>_eff_mlconstr"`
+
+At the end you’ll also see a console summary like:
+
