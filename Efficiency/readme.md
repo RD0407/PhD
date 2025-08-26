@@ -64,3 +64,26 @@ These are useful to highlight low-efficiency detector regions.
 The macro sets consistent styles: marker types, colors, axis labels, legend placement.
 
 The final figure is drawn to a canvas (TCanvas) and can be saved to file.
+
+
+
+## ⚙️ Code Structure (Functions)
+
+ResetRanges(THnSparseD* h)
+Clears all axis ranges on a THnSparse (so projections are not biased by old selections).
+
+ProjectPt(THnSparseD* h, double cmin, double cmax, const char* name)
+Selects a centrality interval and projects the THnSparse onto the pT axis, returning a 1D histogram.
+
+MakeEff(THnSparseD* num, THnSparseD* den, double cmin, double cmax, Color_t col, int mstyle)
+Creates a TEfficiency object for a given centrality range, styled with a chosen color and marker.
+
+main() (or macro execution block)
+
+Opens input ROOT file.
+
+Defines centrality bins.
+
+Loops through bins → calls MakeEff() for each.
+
+Draws all efficiency curves on a shared canvas with insets.
