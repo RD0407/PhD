@@ -1,4 +1,4 @@
-## Efficiency_allCentralities
+# Efficiency_allCentralities
 
 This program is a ROOT-based C++ analysis macro for computing and plotting reconstruction efficiencies as a function of transverse momentum (pT) across different centrality classes in heavy-ion physics analyses.
 
