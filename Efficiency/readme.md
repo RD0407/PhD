@@ -25,7 +25,7 @@ For a given centrality range (cmin, cmax), the function ProjectPt() sets a range
 
 This produces a 1D histogram of yields vs pT.
 
-#### Efficiency Calculation
+#### Efficiency Calculation 
 
 The function MakeEff() takes the numerator and denominator THnSparse objects.
 
